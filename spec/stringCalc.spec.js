@@ -1,27 +1,36 @@
-var add = require("./stringCalc.js");
-var addler = add.add;
+const add = require("../stringCalc");
 
-describe("a string calculator", function() {
-  it("should return 0 for an empty string", function() {
-    expect(addler("")).toEqual(0);
+describe("a string calculator that", function() {
+  it("returns 0 for an empty string", function() {
+    expect(add("")).toEqual(0);
   });
-  it("should return the sum of two numbers", function() {
-    expect(addler("25,30")).toEqual(55);
+  it("takes in a single number", function() {
+    expect(add("1")).toEqual(1);
   });
-  it("should return the sum of multiple numbers", function() {
-    expect(addler("25,30,89,37,4")).toEqual(185);
+  it("returns the sum of multiple numbers", function() {
+    expect(add("25,30,89,37,4")).toEqual(185);
   });
-
-  it("should replace comma with a line break", function() {
-    expect(addler("35\n23")).toEqual(58);
+  it("handles new lines between numbers", function() {
+    expect(add("35/n25,23")).toEqual(83);
   });
-
+  it("supports different delimeters", function() {
+    expect(add("//;\n1;2")).toEqual(3);
+  });
   it("negatives not allowed", function() {
     expect(function() {
-      addler("-35\n23");
+      add("-35\n23");
     }).toThrow(new Error("negatives not allowed"));
   });
   it("numbers greater than 1000 are ignore", function() {
-    expect(addler("1001\n23")).toEqual(23);
+    expect(add("1001\n23")).toEqual(23);
+  });
+  it("allows delimeters to be any length", function() {
+    expect(add("//[***]\n10***5***6")).toEqual(21);
+  });
+  it("allows multiple delimeters", function() {
+    expect(add("//[*][%]\n15*60%3")).toEqual(78);
+  });
+  it("allows multiple delimeters with length longer than one character", function() {
+    expect(add("//[*][%]\n22()*60%73")).toEqual(155);
   });
 });

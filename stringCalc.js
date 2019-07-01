@@ -1,5 +1,4 @@
 function add(string) {
-  var string;
   //returns zero if no string is entered
   if (string == "") {
     return 0;
@@ -9,7 +8,7 @@ function add(string) {
 
   let number = string.match(regex);
 
-  let sum = 0;
+  let lastResult = 0;
   //condition for negative numbers added
   if (string.includes("-")) throw new Error("negatives not allowed");
   //numbers greater than 1000 are ignored
@@ -20,10 +19,9 @@ function add(string) {
   });
   //returns the sum of the numbers added in a string
   for (let i = 0; i < number.length; i++) {
-    sum += parseInt(number[i]);
+    lastResult += parseInt(number[i]);
   }
-  return sum;
+  return lastResult;
 }
 
-// add();
-module.exports = { add: add };
+module.exports = add;
